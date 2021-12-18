@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+@if($khotba)
     <div class="container">
         <div class="row">
             <div class="col-lg-12 mt-3">
@@ -26,7 +27,7 @@
             </div>
         </div>
     </div>
-
+@endif
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12 mt-3">
