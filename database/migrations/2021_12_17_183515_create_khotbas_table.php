@@ -23,6 +23,7 @@ class CreateKhotbasTable extends Migration
             $table->string('word_file_url');
             $table->string('pdf_file_url');
             $table->integer('cate_id')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

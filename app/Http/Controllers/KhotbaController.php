@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Khotba;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,8 +30,11 @@ class KhotbaController extends Controller
             $wordFileUrl = $request->file('word_file')->storeAs('khotbas/'.$request->hijri_year,$wordFilename);
             $request['pdf_file_url']=$pdfFileUrl;
             $request['word_file_url']=$wordFileUrl;
+            $user_id = auth()->user()->id;
+            $request['user_id']=$user_id;
            
-            Khotba::create($request->all());
+           $Khotba = Khotba::create($request->all());
+           $Khotba->khotbaPermissions()->attach($user_id);
             return back()->with(['status'=>'success','message'=>'تم']);
         }
 
@@ -49,13 +53,35 @@ class KhotbaController extends Controller
 
     public function edit(Khotba $khotba)
     {
-        //
+        return view('khotba.edit',compact('khotba'));
     }
 
 
     public function update(Request $request, Khotba $khotba)
     {
-        //
+        
+        if(!$request->pdf_file && !$request->word_file && !$request->title){
+            return back()->with(['status'=>'warning','message'=>'لم يتم']);
+        }
+
+        if($request->pdf_file){
+            Storage::delete($khotba->pdf_file_url);
+            $pdfFilename =$request->pdf_file->getClientOriginalName();
+            $pdfFileUrl = $request->file('pdf_file')->storeAs('khotbas/'.$khotba->hijri_year,$pdfFilename);
+            $khotba->update(['pdf_file_url'=>$pdfFileUrl]);
+        }
+
+        if($request->word_file){
+            Storage::delete($khotba->word_file_url);
+            $wordFilename = $request->word_file->getClientOriginalName();
+            $wordFileUrl = $request->file('word_file')->storeAs('khotbas/'.$khotba->hijri_year,$wordFilename);
+            $khotba->update(['word_file_url'=>$wordFileUrl]);
+        }
+
+        if ($request->title) {
+            $khotba->update(['title'=>$request->title]);
+        }
+        return back()->with(['status'=>'success','message'=>'تم']);
     }
 
  
@@ -64,6 +90,22 @@ class KhotbaController extends Controller
         $khotba->delete();
         Storage::delete($khotba->pdf_file_url);
         Storage::delete($khotba->word_file_url);
-        return back()->with(['status'=>'success','message'=>'تم']);
+        $khotba->khotbaPermissions()->detach();
+        return redirect()->route('welcome_page')->with(['status'=>'success','message'=>'تم']);
     }
+
+
+    public function show(Khotba $khotba)
+    {   
+        return view('khotba.show',compact('khotba'));
+    }
+
+
+    public function dashboard()
+    {   
+        $khotba = Khotba::orderby('id','desc')->first();
+        $users = User::orderby('id','desc')->get();
+        return view('dashboard',compact('khotba','users'));
+    }
+    
 }

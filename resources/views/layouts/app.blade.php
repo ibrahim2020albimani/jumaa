@@ -32,7 +32,6 @@
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
@@ -47,9 +46,9 @@
             @endif
 
 
-            <div class="mt-5">
+            <div class="mt-1 mx-5">
                 @if (session()->has('message'))
-                <div class="alert alert-success ">
+                <div class="alert alert-{{session('status')}} ">
                     <center>{{ session('message') }}</center>
                 </div>
                 @endif

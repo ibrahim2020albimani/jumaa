@@ -2,39 +2,53 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KhotbaController;
+use App\Http\Controllers\UserController;
 use App\Models\Khotba;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
+/**  */
 
 Route::get('/', function () {
-    $khotbas = Khotba::orderby('id','desc')->limit(5)->get();
+    $khotbas = Khotba::orderby('id','desc')->limit(3)->get();
     $khotba = Khotba::orderby('id','desc')->first();
     return view('welcome',compact('khotbas','khotba'));
 })->name('welcome_page');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    $khotba = App\Models\Khotba::orderby('id','desc')->first();
-    return view('dashboard',compact('khotba'));
-})->name('dashboard');
+/** user */
+Route::get('user/store',[UserController::class,'store'])
+    ->middleware(['auth'])
+    ->name('user.store');
 
-
-
-/** building */
+/** dashboard */
+Route::get('dashboard',[KhotbaController::class,'dashboard'])
+    ->middleware(['auth'])
+    ->name('dashboard');
+/** khotba */
 Route::prefix('khotba')->group(function () {
-    // Route::get('{khotba}/edit',[KhotbaController::class,'edit'])->name('khotba.edit');
-    // Route::post('{khotba}/update',[KhotbaController::class,'update'])->name('khotba.update');
+
+    Route::get('{khotba}/show',[KhotbaController::class,'show'])
+    ->name('khotba.show');
+
+    Route::get('{khotba}/edit',[KhotbaController::class,'edit'])
+    ->middleware(['auth','KhotbaPermission:{khotba}'])
+    ->name('khotba.edit');
+
     Route::get('{khotba}/destroy',[KhotbaController::class,'destroy'])
-    ->middleware('auth')
+    ->middleware(['auth','KhotbaPermission:{khotba}'])
     ->name('khotba.destroy');
-    Route::post('store',[KhotbaController::class,'store'])->name('khotba.store');
-    Route::get('search',[KhotbaController::class,'search'])->name('khotba.search');
-    Route::post('search',[KhotbaController::class,'search'])->name('khotba.search');
+
+    Route::post('{khotba}/update',[KhotbaController::class,'update'])
+    ->middleware(['auth','KhotbaPermission:{khotba}'])
+    ->name('khotba.update');
+
+    Route::post('store',[KhotbaController::class,'store'])
+    ->middleware(['auth'])
+    ->name('khotba.store');
+
+    Route::get('search',[KhotbaController::class,'search'])
+    ->name('khotba.search');
+
+    Route::post('search',[KhotbaController::class,'search'])
+    ->name('khotba.search');
 });
+
+

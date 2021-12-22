@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
                         <img src="{{asset('img/logo.png')}}" alt="" width="120">
                     </a>
                     <h2 class="head-title">خطبة الجمعة</h2>
+                    @guest
+                    <a href="{{route('login')}}">{{__('login')}}</a>
+                    @endguest
                 </div>
             </div>
             @auth()
@@ -32,9 +35,9 @@
         </div>
         </center>
        
-        <div class="mt-5">
+        <div class="m-5" >
             @if (session()->has('message'))
-            <div class="alert alert-success ">
+            <div class="alert alert-{{session('status')}}">
                 <center>{{ session('message') }}</center>
             </div>
             @endif
