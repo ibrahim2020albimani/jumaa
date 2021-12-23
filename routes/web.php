@@ -14,7 +14,7 @@ Route::get('/', function () {
 })->name('welcome_page');
 
 /** user */
-Route::get('user/store',[UserController::class,'store'])
+Route::post('user/store',[UserController::class,'store'])
     ->middleware(['auth'])
     ->name('user.store');
 

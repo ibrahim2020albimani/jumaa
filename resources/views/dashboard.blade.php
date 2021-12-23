@@ -37,6 +37,11 @@
                 @foreach($users as $user)
                 <div class="mt-4">
                     [{{$user->id}}] {{$user->name}}
+                    <div>
+                        @if(auth()->user()->id==1)
+                        <small>{{$user->email}}</small>
+                        @endif
+                    </div>
                 </div>
                 @endforeach
             </div>

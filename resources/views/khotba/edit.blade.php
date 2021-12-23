@@ -27,7 +27,7 @@
 				        <input name="word_file" type="file" class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
 
 				        <div class="mt-3 text-gray-700 text-sm font-bold">{{__('title')}}</div>
-				        <input name="title" class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+				        <input name="title" class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$khotba->title}}">
 
 				        <button class="mt-3 w-full hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded">
 				            {{__('update')}}

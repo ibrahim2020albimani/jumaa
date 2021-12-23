@@ -81,7 +81,7 @@ class KhotbaController extends Controller
         if ($request->title) {
             $khotba->update(['title'=>$request->title]);
         }
-        return back()->with(['status'=>'success','message'=>'تم']);
+        return redirect()->route('welcome_page')->with(['status'=>'success','message'=>'تم']);
     }
 
  
@@ -91,7 +91,8 @@ class KhotbaController extends Controller
         Storage::delete($khotba->pdf_file_url);
         Storage::delete($khotba->word_file_url);
         $khotba->khotbaPermissions()->detach();
-        return redirect()->route('welcome_page')->with(['status'=>'success','message'=>'تم']);
+        return redirect()->route('khotba.show',$khotba->id)
+        ->with(['status'=>'success','message'=>'تم']);
     }
 
 

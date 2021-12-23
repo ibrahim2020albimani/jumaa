@@ -24,7 +24,7 @@
                         </a>
                         
                         
-                        <a target="_blank" href="https://wa.me/?text=خطبة الجمعة  %20{{$khotba->hijri_day}}  %20{{$khotba->hijri_month}}  %20{{$khotba->hijri_year}} %20 هجري %03 {{$khotba->title}} %03 {{route('khotba.show',$khotba->id)}}">
+                        <a target="_blank" href="https://wa.me/?text=خطبة الجمعة%20{{$khotba->hijri_day}}%20{{$khotba->hijri_month}}%20{{$khotba->hijri_year}}%20هجري%03{{$khotba->title}}%03{{route('khotba.show',$khotba->id)}}">
                             <img class="px-2 display-img-icon" src="https://static.whatsapp.net/rsrc.php/ym/r/36B424nhiL4.svg" alt="WhatsApp" width="145">
                         </a>
                         <a target="_blank" href="mailto:?subject={{$khotba->title}}&amp;body={{route('khotba.show',$khotba->id)}}"title="مشاركة الخطبة">
