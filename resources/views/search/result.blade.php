@@ -16,7 +16,7 @@
                 <div>
                     @foreach($khotbas as $khotba)
                     <center>
-                        {{$khotba->title}}
+                        <a href="{{route('khotba.show',$khotba->id)}}">{{$khotba->title}}</a>
                         <div>
                             <small>خطبة الجمعة {{$khotba->hijri_day}} {{$khotba->hijri_month}} {{$khotba->hijri_year}} هجري</small>
                         </div>
