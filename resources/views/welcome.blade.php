@@ -28,7 +28,7 @@
                             <img class="px-2 display-img-icon" src="https://static.whatsapp.net/rsrc.php/ym/r/36B424nhiL4.svg" alt="WhatsApp" width="145">
                         </a>
                         <a target="_blank" href="mailto:?subject={{$khotba->title}}&amp;body={{route('khotba.show',$khotba->id)}}"title="مشاركة الخطبة">
-                          <img class="px-2 display-img-icon" src="http://png-2.findicons.com/files/icons/573/must_have/48/mail.png" width="45">
+                          <img class="px-2 display-img-icon" src="http://png-2.findicons.com/files/icons/573/must_have/48/mail.png" width="35">
                         </a>
 
                     </div>
