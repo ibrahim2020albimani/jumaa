@@ -16,16 +16,16 @@ class KhotbaController extends Controller
         // return $request->all();
         $this->validate($request,[
             'title'=>'required',
-            'pdf_file'=>'required',
-            'word_file'=>'required',
+            'pdf_file'=>'required|mimes:pdf',
+            'word_file'=>'required|mimes:docx,doc',
             'hijri_day'=>'required',
             'hijri_month'=>'required',
             'hijri_year'=>'required'
         ]);
 
         if ($request->hasFile('pdf_file') && $request->hasFile('word_file')) {
-            $pdfFilename =$request->pdf_file->getClientOriginalName();
-            $wordFilename = $request->word_file->getClientOriginalName();
+            $pdfFilename = date('Y-m-d',time()) . '.' .$request->pdf_file->getClientOriginalExtension();
+            $wordFilename = date('Y-m-d',time()) . '.' . $request->word_file->getClientOriginalExtension();
             $pdfFileUrl = $request->file('pdf_file')->storeAs('khotbas/'.$request->hijri_year,$pdfFilename);
             $wordFileUrl = $request->file('word_file')->storeAs('khotbas/'.$request->hijri_year,$wordFilename);
             $request['pdf_file_url']=$pdfFileUrl;
