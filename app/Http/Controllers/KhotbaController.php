@@ -91,7 +91,7 @@ class KhotbaController extends Controller
         Storage::delete($khotba->pdf_file_url);
         Storage::delete($khotba->word_file_url);
         $khotba->khotbaPermissions()->detach();
-        return redirect()->route('khotba.show',$khotba->id)
+        return redirect()->route('welcome_page')
         ->with(['status'=>'success','message'=>'تم']);
     }
 
