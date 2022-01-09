@@ -15,3 +15,4 @@ yarn-error.log
 /.vscode
 note.txt
 .DS_Store
+.phpintel
